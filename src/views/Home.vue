@@ -1,18 +1,28 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <HelloWorld />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import character from '../components/character';
 
 export default {
-  name: 'home',
   components: {
-    HelloWorld
+    character,
+  },
+  methods: {
+    showModal (id){
+      this.fetchOne(id)
+    },
+    async fetchOne (id){
+      let result = await axios.get(`https://rickandmortyapi.com/api/character/${id}/`);
+      this.currentCharacter = result.data;
+      this.modal = true;
+
+      console.log(this.currentCharacter, "personaje")
+    },
+    watchMore (id){
+      this.$emit('showModal',id)
+    }
   }
-}
+};
 </script>
