@@ -52,11 +52,11 @@
 
         <v-list-item >
           <v-list-item-action>
-            <v-icon>location_on</v-icon>
+            <v-icon>mdi-skull</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>Orlando, FL 79938</v-list-item-title>
+            <v-list-item-title>{{currentCharacter.status}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -74,7 +74,10 @@ export default {
     return {
       currentCharacter: {},
       items:[
-        {icon:'mdi-map-marker',proper:''}
+        {icon:'mdi-map-marker',itemTitle:'{{ currentCharacter.location.name }}'},
+        {icon:'mdi-gender-{{currentCharacter.gender.toLowerCase() }}',itemTitle:'{{ currentCharacter.gender}}'},
+        {icon:'mail',itemTitle:'{{currentCharacter.origin.name}}'},
+        {icon:'mdi-skull',itemTitle:'{{currentCharacter.status}}'}
       ]
     }
   },
@@ -84,7 +87,7 @@ export default {
   methods:{
     async fetchOne (){
       let { data } = await axios.get(`https://rickandmortyapi.com/api/character/${this.id}/`);
-      this.currentCharacter = data
+      this.currentCharacter = data;
       console.log(this.currentCharacter)
     }
   }

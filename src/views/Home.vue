@@ -1,9 +1,10 @@
 <template>
-  <HelloWorld />
+  <character />
 </template>
 
 <script>
 import character from '../components/character';
+import axios from 'axios'
 
 export default {
   components: {
