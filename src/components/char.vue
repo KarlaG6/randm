@@ -8,15 +8,14 @@
         <span class="headline white--text">{{ currentCharacter.id }}</span>
         
       </v-card-title>
-
-      <v-list>
+      <v-list v-for="item in items" :key="item.name" :items="items">
         <v-list-item>
           <v-list-item-action>
-            <v-icon>mdi-map-marker</v-icon>
+            <v-icon v-text="item.icon"></v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>{{ currentCharacter.location.name }}</v-list-item-title>
+            <v-list-item-title v-text="item.itemTitle" :itemTitle="itemTitle"></v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
 
@@ -24,43 +23,8 @@
         </v-list-item>
 
         <v-divider inset></v-divider>
-
-        <v-list-item>
-          <v-list-item-action>
-            <v-icon>mdi-gender-{{currentCharacter.gender.toLowerCase() }}</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ currentCharacter.gender}}</v-list-item-title>
-          </v-list-item-content>
-
-        </v-list-item>
-
-        <v-divider inset></v-divider>
-
-        <v-list-item >
-          <v-list-item-action>
-            <v-icon>mail</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>{{currentCharacter.origin.name}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-divider inset></v-divider>
-
-        <v-list-item >
-          <v-list-item-action>
-            <v-icon>mdi-skull</v-icon>
-          </v-list-item-action>
-
-          <v-list-item-content>
-            <v-list-item-title>{{currentCharacter.status}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-
+         </v-list>
+        
       <v-img  :src="currentCharacter.image"  height="200px"></v-img>
     </v-card>
   </v-flex>
@@ -70,17 +34,15 @@
 import axios from 'axios'
 export default {
   props: ['id'],
-  data: function (){
-    return {
+  data: () => ({
       currentCharacter: {},
       items:[
-        {icon:'mdi-map-marker',itemTitle:'{{ currentCharacter.location.name }}'},
-        {icon:'mdi-gender-{{currentCharacter.gender.toLowerCase() }}',itemTitle:'{{ currentCharacter.gender}}'},
-        {icon:'mail',itemTitle:'{{currentCharacter.origin.name}}'},
-        {icon:'mdi-skull',itemTitle:'{{currentCharacter.status}}'}
+        {icon:'mdi-map-marker',itemTitle:'currentCharacter.location.name',name:"location"},
+        {icon:'mdi-gender-${currentCharacter.gender.toLowerCase() }',itemTitle:'currentCharacter.gender',name:"gender"},
+        {icon:'mail',itemTitle:'currentCharacter.origin.name',name:"origin"},
+        {icon:'mdi-skull',itemTitle:'currentCharacter.status',name:"status"}
       ]
-    }
-  },
+  }),
   created () {
     this.fetchOne()
   },
