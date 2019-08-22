@@ -27,6 +27,7 @@
 import axios from 'axios'
 
 export default {
+  props: ['id'],
   data: function() {
     return {
       characters: [],

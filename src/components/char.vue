@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center wrap>
-  <v-flex xs12 sm8>
+  <v-flex xs12 sm6>
     <v-card>
       <v-card-title class="grey darken-1">
         <span class="headline white--text">{{ currentCharacter.name }}</span>
@@ -8,14 +8,15 @@
         <span class="headline white--text">{{ currentCharacter.id }}</span>
         
       </v-card-title>
-      <v-list v-for="item in items" :key="item.name" :items="items">
+
+      <v-list>
         <v-list-item>
           <v-list-item-action>
-            <v-icon v-text="item.icon"></v-icon>
+            <v-icon>mdi-map-marker</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title v-text="item.itemTitle" :itemTitle="itemTitle"></v-list-item-title>
+            <v-list-item-title>{{ currentCharacter.location.name }}</v-list-item-title>
           </v-list-item-content>
           <v-list-item-action>
 
@@ -23,8 +24,43 @@
         </v-list-item>
 
         <v-divider inset></v-divider>
-         </v-list>
-        
+
+        <v-list-item>
+          <v-list-item-action>
+            <v-icon>mdi-gender-{{currentCharacter.gender.toLowerCase() }}</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ currentCharacter.gender}}</v-list-item-title>
+          </v-list-item-content>
+
+        </v-list-item>
+
+        <v-divider inset></v-divider>
+
+        <v-list-item >
+          <v-list-item-action>
+            <v-icon>mdi-baby-face-outline</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>{{currentCharacter.origin.name}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-divider inset></v-divider>
+
+        <v-list-item >
+          <v-list-item-action>
+            <v-icon>mdi-skull</v-icon>
+          </v-list-item-action>
+
+          <v-list-item-content>
+            <v-list-item-title>{{currentCharacter.status}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
       <v-img  :src="currentCharacter.image"  height="200px"></v-img>
     </v-card>
   </v-flex>
@@ -35,13 +71,7 @@ import axios from 'axios'
 export default {
   props: ['id'],
   data: () => ({
-      currentCharacter: {},
-      items:[
-        {icon:'mdi-map-marker',itemTitle:'currentCharacter.location.name',name:"location"},
-        {icon:'mdi-gender-${currentCharacter.gender.toLowerCase() }',itemTitle:'currentCharacter.gender',name:"gender"},
-        {icon:'mail',itemTitle:'currentCharacter.origin.name',name:"origin"},
-        {icon:'mdi-skull',itemTitle:'currentCharacter.status',name:"status"}
-      ]
+      currentCharacter: {}
   }),
   created () {
     this.fetchOne()
@@ -57,7 +87,7 @@ export default {
 </script>
 <style>
 .v-card.v-sheet.theme--light{
-  margin-top: 8%
+  margin-top: 8%;
 }
 div#app{
   background-color: black 
