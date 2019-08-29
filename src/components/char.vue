@@ -73,7 +73,7 @@ export default {
   data: () => ({
       currentCharacter: {}
   }),
-  created () {
+  created () {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     this.fetchOne()
   },
   methods:{

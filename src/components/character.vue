@@ -47,8 +47,7 @@ export default {
       .catch( (err) => console.log (err))
     },
     seemore (id){
-    this.$router.push('/char')
-    .$emit("showModal", id)
+    this.$router.push(`char/${id}`)
     },
     showModal (id){
       this.fetchOne(id)
