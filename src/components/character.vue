@@ -6,8 +6,6 @@
         <v-spacer></v-spacer> 
         <h3>Personajes</h3>
         <v-spacer></v-spacer> 
-          <v-btn v-on:click="fetch" dark>Consultar</v-btn>
-          <v-spacer></v-spacer> 
       </v-flex>
       </v-layout>
       <v-layout wrap>
@@ -19,13 +17,15 @@
           </v-img>
         </v-card>
       </v-flex>
-    </v-layout>   
+    </v-layout>  
+    <div class="text-center">
+      <v-pagination  v-model="pageSelect" :length="7" :total-visible="7" ></v-pagination>
+    </div> 
   </v-container>
 </template>
 
 <script>
-import axios from 'axios'
-
+import axios from 'axios';
 export default {
   props: ['id'],
   data: function() {
@@ -34,23 +34,14 @@ export default {
       styleObject: {
         color: 'red',
         fontSize: '13px'
-      }
+      },
+      pageSelect:1  
     }
   },
   methods: {
-    fetch (){
-      let result = axios.get('https://rickandmortyapi.com/api/character')
-      .then((res)=>{
-        this.characters = res.data.results;
-        console.log(res.data)
-      })
-      .catch( (err) => console.log (err))
-    },
+    
     seemore (id){
     this.$router.push(`char/${id}`)
-    },
-    showModal (id){
-      this.fetchOne(id)
     },
     async fetchOne (id){
       let result = await axios.get(`https://rickandmortyapi.com/api/character/${id}/`);
@@ -59,6 +50,19 @@ export default {
 
       console.log(this.currentCharacter, "personaje")
     }
+  },
+  created(){
+    console.log('created called');
+    let result = axios.get('https://rickandmortyapi.com/api/character')
+    .then((res)=>{
+      this.characters = res.data.results;
+      console.log(res.data)
+    })
+    .catch( (err) => console.log (err))
+    
+    this.fetchOne(id);
+
+    
   }
 };
 </script>
