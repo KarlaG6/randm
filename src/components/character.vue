@@ -19,7 +19,7 @@
       </v-flex>
     </v-layout>  
     <div class="text-center">
-      <v-pagination  v-model="pageSelect" :length="7" :total-visible="7" ></v-pagination>
+      <v-pagination  v-model="pageSelect" :length="9" :total-visible="7" ></v-pagination>
     </div> 
   </v-container>
 </template>
@@ -35,34 +35,30 @@ export default {
         color: 'red',
         fontSize: '13px'
       },
-      pageSelect:1  
+      pageSelect:1 ,
     }
   },
   methods: {
-    
-    seemore (id){
-    this.$router.push(`char/${id}`)
+    fetch (pageSelect){
+      let result = axios.get(`https://rickandmortyapi.com/api/character/?page=${this.pageSelect}`)
+      .then((res)=>{
+        this.characters = res.data.results; //aquí lo que se trae de la API es almacenado en data para manipularlo
+        console.log(res.data)               //cómo me traeré pages de info?
+      })                                    //elsint+prettier
+      .catch(err => console.log(err));
     },
-    async fetchOne (id){
-      let result = await axios.get(`https://rickandmortyapi.com/api/character/${id}/`);
-      this.currentCharacter = result.data;
-      this.modal = true;
-
-      console.log(this.currentCharacter, "personaje")
-    }
+    seemore (id){
+      this.$router.push(`char/${id}`)
+    },
   },
-  created(){
-    console.log('created called');
-    let result = axios.get('https://rickandmortyapi.com/api/character')
-    .then((res)=>{
-      this.characters = res.data.results;
-      console.log(res.data)
-    })
-    .catch( (err) => console.log (err))
-    
-    this.fetchOne(id);
-
-    
+  created() {
+    this.fetch(this.pageSelect);
+    console.log('created called')
+  },
+  watch: {
+    pageSelect: function (value){
+      this.fetch(value)
+    }
   }
 };
 </script>
@@ -71,7 +67,7 @@ export default {
   padding: 2%
 }
 * {
-  padding: 4px;
+  /*padding: 4px;*/
 }
 h1,h3{
   color:white
